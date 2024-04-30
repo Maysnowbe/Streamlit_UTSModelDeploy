@@ -44,7 +44,7 @@ def main():
             st.error("Please fill all fields before submitting.")
             return
         
-        scalers, encoder = loadEncoder()
+        encoder = loadEncoder()
 
         categorical = ['Geography', 'Gender']
         conti = ['CreditScore', 'Balance', 'EstimatedSalary']
@@ -55,7 +55,6 @@ def main():
         userData = pd.concat([userData, user_data_encoded], axis=1)
         userData.drop(categorical, axis=1, inplace=True)
 
-        userData[conti] = scalers.transform(userData[conti])
         with st.spinner("Predicting... Please Wait"):
             # Load the pickled model from its saved location
             with open("finalized_model.pkl", "rb") as model_file:
